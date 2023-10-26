@@ -3,74 +3,92 @@ import java.util.Scanner;
 public class PriceCalculator {
 
     boolean booleanMark = true;
-   public String product; //userAnswer;
-   private final String finishInput = "Завершить";
-   private String productList = "";
-   double productPrice;
-   private double finalSum;
+    public String product;
+    private final String finishInput = "Завершить";
+    private String productList = "";
+    double productPrice;
+    private double finalSum;
+
+    public void priceCalculator() {
+        Scanner userInput = new Scanner(System.in);
+
+        do {
+            System.out.println("Пожалуйста введите название продукта:");
+            product = userInput.next();
+            setProduct(product);
+            System.out.println("Пожалуйста введите цену продукта:");
+            while (!userInput.hasNextDouble()) {
+                System.out.println("Ошибка…попробуйте ещё раз!!!");
+                userInput = new Scanner(System.in);
+            }
+            productPrice = userInput.nextDouble();
+            while (productPrice < 0) {
+                System.out.println("Цена не может быть меньше нуля…введите другую цену:");
+                while (!userInput.hasNextDouble()) {
+                    System.out.println("Ошибка…попробуйте ещё раз!!!");
+                    userInput = new Scanner(System.in);
+                }
+                productPrice = userInput.nextDouble();
+            }
+            setPrice(productPrice);
+            System.out.println("Хотите завершить ввод: \"Завершить\"/\"Продолжить\"");
+            product = userInput.next();
+        } while (booleanMark != (product.equalsIgnoreCase(finishInput)));
+        System.out.println("Продукт был успешно добавлен!!!");
+
+    }
 
 
-   PriceCalculator() {
-       Scanner userInput = new Scanner(System.in);
+    private void setProduct(String productName) {
+        productList = productList.concat(productName);
+        productList = productList.concat("\n");
+    }
 
-       do{
-           System.out.println("Please input product name.");
-           product = userInput.next();
-           setProduct(product);
-               System.out.println("Please input product price.");
-               productPrice = userInput.nextDouble();  //нет проверки на строку.....тут появится ошибка при вводе другого типа.....программа прерывает работу....
-               while(productPrice < 0) {
-                   System.out.println("That is not correct price value. Try again please:");
-                   productPrice = userInput.nextDouble();
-               }
-           setPrice(productPrice);
-           System.out.println("If You don't want to new product adds, write: \"Завершить\"/\"Продолжить\"");  //in here You can input different value for continue....
-           product = userInput.next();
-       }while(booleanMark != (product.equalsIgnoreCase(finishInput)));
-       System.out.println("Products been added successfully!");
-   }
+    private void setPrice(double productPrice) {
+        finalSum += productPrice;
+    }
+
+    public String getProductList() {
+        System.out.println("Список продутов:");
+        return productList;
+    }
+
+    public double getFinalSum() {
+        return finalSum;
+    }
 
 
-   private void setProduct(String productName){
-       productList = productList.concat(productName);
-       productList  = productList.concat("\n" );
-   }
+    public void onePersonPrice(double finalPrice, int personCount) {
+        double personBill = finalPrice / personCount;
+        System.out.println(getProductList());
+        System.out.println(String.format("С каждого участника: %.2f", personBill));
+        rub(personBill);
+    }
 
-   private void setPrice(double productPrice){
-       finalSum+=productPrice;
-   }
-
-   public String getProductList(){
-       System.out.println("Product list:");
-       return productList;
-   }
-
-   public double getFinalSum(){
-       return finalSum;
-   }
-
-
-   public void onePersonPrice(double finalPrice, int personCount){
-     double personBill = finalPrice/personCount;
-     System.out.println(getProductList());
-     System.out.println(String.format("Your bill from one person: %.2f", personBill));   //String.format("%.2f", personBill));   personBill
-     rub(personBill);
-   }
-
-   private void rub(double personBill){
-    int intValue = (int)Double.parseDouble(String.format("%.2f", personBill));//(int)personBill;
-    String convertToStr = Integer.toString(intValue);
-       switch(convertToStr.charAt(convertToStr.length() - 1)) {
-           case  '1' :  System.out.println("рубль");
-               break;
-           case '2':
-           case '3':
-           case '4':
-               System.out.println("рубля");
-               break;
-           default : System.out.println("рублей");
-               break;
-       }
-   }
-
+    private void rub(double personBill) {
+        int intValue = (int) Math.floor(personBill);
+        int rubValue = intValue % 100;
+        if (rubValue >= 11 && rubValue <= 19) {
+            System.out.println("рублей");
+        } else {
+            switch (rubValue % 10) {
+                case 1:
+                    System.out.println("рубль");
+                    break;
+                case 2:
+                case 3:
+                case 4:
+                    System.out.println("рубля");
+                    break;
+                case 5:
+                case 6:
+                case 7:
+                case 8:
+                case 9:
+                case 0:
+                    System.out.println("рублей");
+                    break;
+            }
+        }
+    }
 }
