@@ -1,7 +1,6 @@
 import java.util.Scanner;
 
 public class PersonCount {
-
     public int personCount(Scanner userInput) {
         int userCount;
         int circleStep = 0;

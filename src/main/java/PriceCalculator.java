@@ -1,7 +1,6 @@
 import java.util.Scanner;
 
 public class PriceCalculator {
-
     boolean booleanMark = true;
     public String product;
     private final String finishInput = "Завершить";
@@ -11,7 +10,6 @@ public class PriceCalculator {
 
     public void priceCalculator() {
         Scanner userInput = new Scanner(System.in);
-
         do {
             System.out.println("Пожалуйста введите название продукта:");
             product = userInput.next();
@@ -35,9 +33,7 @@ public class PriceCalculator {
             product = userInput.next();
         } while (booleanMark != (product.equalsIgnoreCase(finishInput)));
         System.out.println("Продукт был успешно добавлен!!!");
-
     }
-
 
     private void setProduct(String productName) {
         productList = productList.concat(productName);
@@ -56,7 +52,6 @@ public class PriceCalculator {
     public double getFinalSum() {
         return finalSum;
     }
-
 
     public void onePersonPrice(double finalPrice, int personCount) {
         double personBill = finalPrice / personCount;
