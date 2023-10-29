@@ -67,22 +67,9 @@ public class PriceCalculator {
             System.out.println("рублей");
         } else {
             switch (rubValue % 10) {
-                case 1:
-                    System.out.println("рубль");
-                    break;
-                case 2:
-                case 3:
-                case 4:
-                    System.out.println("рубля");
-                    break;
-                case 5:
-                case 6:
-                case 7:
-                case 8:
-                case 9:
-                case 0:
-                    System.out.println("рублей");
-                    break;
+                case 1 -> System.out.println("рубль");
+                case 2, 3, 4 -> System.out.println("рубля");
+                default -> System.out.println("рублей");
             }
         }
     }
